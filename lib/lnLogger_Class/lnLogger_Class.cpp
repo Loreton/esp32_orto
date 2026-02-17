@@ -1,8 +1,9 @@
 /*
 // updated by ...: Loreto Notarantonio
-// Date .........: 11-09-2025 14.29.00
+// Date .........: 16-02-2026 08.36.38
 */
 
+// >>>lnLogger_Class.cpp
 #include <Arduino.h>
 #include <ESP32Time.h> // ESP32Time.cpp
 #include <freertos/semphr.h> // Required here for mutex implementation
@@ -207,4 +208,4 @@ void ESP32Logger::write(const char* color, const char* tag, const char* file, co
     }
 }
 
-ESP32Logger lnLog; // Changed class name
+ESP32Logger lnLog; // Definizione oggetto lnLog

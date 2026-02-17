@@ -1,6 +1,23 @@
 .pio/build/esp32_littleFS/src/main.cpp.o: src/main.cpp \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp_arduino_version.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFi.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Print.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/WString.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/pgmspace.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Printable.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/IPAddress.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/WString.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Printable.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/IPv6Address.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiType.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_wifi/include/esp_wifi_types.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_wifi/include/esp_private/esp_wifi_types_private.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_common/include/esp_err.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_common/include/esp_compiler.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_hw_support/include/esp_interface.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_event/include/esp_event_base.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiSTA.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiGeneric.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_event/include/esp_event.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/FreeRTOS.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/esp_additions/freertos/FreeRTOSConfig.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_common/include/esp_compiler.h \
@@ -33,8 +50,6 @@
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_hw_support/include/soc/cpu.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_hw_support/include/esp_cpu.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include/hal/cpu_hal.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_common/include/esp_err.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_common/include/esp_compiler.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/soc/esp32/include/soc/soc_caps.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include/hal/cpu_types.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/esp32/include/hal/cpu_ll.h \
@@ -63,9 +78,56 @@
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/task.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/list.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/esp_additions/freertos/task_snapshot.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/semphr.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/queue.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/task.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/semphr.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/queue.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_event/include/esp_event_base.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_event/include/esp_event_legacy.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_netif/include/esp_netif.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_netif/include/esp_netif_ip_addr.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_netif/include/esp_netif_types.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_netif/include/esp_netif_defaults.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_eth/include/esp_eth_netif_glue.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_eth/include/esp_eth.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_eth/include/esp_eth_com.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include/hal/eth_types.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_eth/include/esp_eth_mac.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_eth/include/esp_eth_phy.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/tcpip_adapter/include/tcpip_adapter.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/tcpip_adapter/include/tcpip_adapter_types.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/ip_addr.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/opt.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/port/esp32/include/lwipopts.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include/sys/ioctl.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_system/include/esp_task.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/esp_additions/freertos/FreeRTOSConfig.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/port/esp32/include/netif/dhcp_state.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/port/esp32/include/sntp/sntp_get_set_time.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/debug.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/arch.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/port/esp32/include/arch/cc.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include/errno.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/port/esp32/include/arch/sys_arch.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/port/esp32/include/arch/vfs_lwip.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/def.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/ip4_addr.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/ip6_addr.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/def.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/ip6_zone.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/include/apps/dhcpserver/dhcpserver.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include/lwip/err.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_netif/include/esp_netif_sta_list.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_wifi/include/esp_smartconfig.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/wifi_provisioning/include/wifi_provisioning/manager.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/protocomm/include/common/protocomm.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/protocomm/include/security/protocomm_security.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/wifi_provisioning/include/wifi_provisioning/wifi_config.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiAP.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiScan.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiClient.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp_arduino_version.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp32-hal.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_hw_support/include/esp_sleep.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include/hal/touch_sensor_types.h \
@@ -75,7 +137,6 @@
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/soc/esp32/include/soc/gpio_struct.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/soc/esp32/include/soc/gpio_reg.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/soc/esp32/include/soc/gpio_sig_map.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/queue.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/event_groups.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos/timers.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/esp32-hal-log.h \
@@ -107,19 +168,13 @@
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/stdlib_noniso.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/binary.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/WCharacter.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/WString.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/pgmspace.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Stream.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Print.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Printable.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/IPAddress.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/WString.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Printable.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Client.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Server.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Udp.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Stream.h \
- /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/IPAddress.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/HardwareSerial.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/HWCDC.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/USBCDC.h \
@@ -133,8 +188,72 @@
  /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_hw_support/include/soc/esp32/spiram.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/io_pin_remap.h \
  /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Arduino.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Client.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiServer.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Server.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiUdp.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/Udp.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/cores/esp32/cbuf.h \
+ include/config.h lib/lnLogger_Class/lnLogger_Class.h \
+ .pio/libdeps/esp32_littleFS/ESP32Time/ESP32Time.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src/WiFiClientSecure.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src/ssl_client.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/platform.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/port/include/mbedtls/esp_config.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/config.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/check_config.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/port/include/esp_mem.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/platform_time.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/net.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/net_sockets.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/ssl.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/port/include/mbedtls/bignum.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/bignum.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/ecp.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/ssl_ciphersuites.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/pk.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/md.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/platform_util.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/rsa.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/ecdsa.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/cipher.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/x509_crt.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/x509.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/asn1.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/x509_crl.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/dhm.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/ecdh.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/debug.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/entropy.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/sha512.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/port/include/sha512_alt.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include/hal/sha_types.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_rom/include/esp32/rom/sha.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/ctr_drbg.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/aes.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/port/include/aes_alt.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/port/include/aes/esp_aes.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include/hal/aes_types.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/error.h \
+ .pio/libdeps/esp32_littleFS/Espalexa/src/Espalexa.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/WebServer.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/HTTP_Method.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/nghttp/port/include/http_parser.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/Uri.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src/detail/RequestHandler.h \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiUdp.h \
+ .pio/libdeps/esp32_littleFS/Espalexa/src/EspalexaDevice.h \
+ .pio/libdeps/esp32_littleFS/AsyncTelegram2/src/AsyncTelegram2.h \
+ .pio/libdeps/esp32_littleFS/ArduinoJson/src/ArduinoJson.h \
+ .pio/libdeps/esp32_littleFS/ArduinoJson/src/ArduinoJson.hpp \
+ .pio/libdeps/esp32_littleFS/ArduinoJson/src/ArduinoJson/Configuration.hpp \
+ /home/loreto/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/FS.h \
+ .pio/libdeps/esp32_littleFS/AsyncTelegram2/src/DataStructures.h \
+ .pio/libdeps/esp32_littleFS/AsyncTelegram2/src/InlineKeyboard.h \
+ .pio/libdeps/esp32_littleFS/AsyncTelegram2/src/ReplyKeyboard.h \
+ .pio/libdeps/esp32_littleFS/AsyncTelegram2/src/serial_log.h \
  .pio/libdeps/esp32_littleFS/OneWire/OneWire.h \
  .pio/libdeps/esp32_littleFS/OneWire/util/OneWire_direct_regtype.h \
  .pio/libdeps/esp32_littleFS/DallasTemperature/DallasTemperature.h \
- lib/lnLogger_Class/lnLogger_Class.h \
- .pio/libdeps/esp32_littleFS/ESP32Time/ESP32Time.h
+ /home/loreto/filu/lnEnv/config/envars/include/lnEsp32Orto_Bot.h \
+ /home/loreto/filu/lnEnv/config/envars/include/ssid_casetta.h
