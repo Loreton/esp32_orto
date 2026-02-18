@@ -8,22 +8,26 @@
 #include <Arduino.h>
 #include "config.h"
 
+char ev_buf[50];
 void startValvola(bool apri, int minuti) {
-    if (isMoving) return;
+    if (EV_isMoving) return;
 
     // Feedback sonoro immediato
     digitalWrite(BUZZER, HIGH); delay(100); digitalWrite(BUZZER, LOW);
 
-    LOG_INFO("Inizio movimento: %s", apri ? "APERTURA" : "CHIUSURA");
+    // LOG_INFO("Inizio movimento: %s", apri ? "APERTURA" : "CHIUSURA");
+    snprintf(ev_buf, sizeof(ev_buf), "Inizio movimento: %s", apri ? "APERTURA" : "CHIUSURA");
+    LOG_INFO(ev_buf);
+    bot.sendTo(lastAdminChatId, ev_buf);
 
-    isMoving = true;
+    EV_isMoving = true;
     moveStartTime = millis();
 
     if (apri) {
         currentAutoCloseDuration = (unsigned long)minuti * 60000;
-        isOpen = true;
+        EV_isOpen = true;
     } else {
-        isOpen = false;
+        EV_isOpen = false;
     }
 
     digitalWrite(RELAY_DIR, apri ? HIGH : LOW);
@@ -32,10 +36,13 @@ void startValvola(bool apri, int minuti) {
 }
 
 void checkValvolaTimer() {
-    if (isMoving && (millis() - moveStartTime >= MOVING_TIME)) {
+    if (EV_isMoving && (millis() - moveStartTime >= MOVING_TIME)) {
         digitalWrite(RELAY_PWR, LOW);
-        isMoving = false;
-        if (isOpen) lastOpenMillis = millis();
-        LOG_DEBUG("Fine movimento valvola.");
+        EV_isMoving = false;
+        if (EV_isOpen) lastOpenMillis = millis();
+
+        snprintf(ev_buf, sizeof(ev_buf), "Fine movimento: %s", EV_isOpen ? "APERTURA" : "CHIUSURA");
+        LOG_INFO(ev_buf);
+        bot.sendTo(lastAdminChatId, ev_buf);
     }
 }

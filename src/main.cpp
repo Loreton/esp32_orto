@@ -8,15 +8,20 @@
 
 // >>> main.cpp
 #include <WiFi.h>
+
 #define __I_AM_MAIN_CPP__
 #include "config.h"
+
 
 // --- CREDENTIALS
 #include <lnEsp32Orto_Bot.h>
 #include <ssid_casetta.h>
 const char* ssid = casettaSSID;
 const char* password = casettaPassword;
-#define BOTtoken lnEsp32Orto
+#define BOTtoken lnEsp32Orto_token
+#define BOTchatid lnEsp32Orto_chatid
+
+
 
 
 
@@ -30,6 +35,9 @@ void setup() {
     lnLog.init();
     LOG_INFO("Sistema OrtoControl in avvio...");
 
+    if (lastAdminChatId == 0) {
+        lastAdminChatId = BOTchatid;
+    }
     // Configurazione Pin
     pinMode(RELAY_PWR, OUTPUT);
     pinMode(RELAY_DIR, OUTPUT);
@@ -58,6 +66,40 @@ void setup() {
         LOG_WARN("Richiesta 404: %s", server.uri().c_str());
         server.send(404, "text/plain", "Non trovato");
     });
+
+    // Gestione APRI dal Web
+    server.on("/apri", []() {
+        int minuti = 30;
+        if (server.hasArg("t")) minuti = server.arg("t").toInt();
+
+        LOG_INFO("Web: Richiesta apertura per %d min", minuti);
+        startValvola(true, minuti);
+
+        // Redirect alla home per non vedere "Not Found"
+        server.sendHeader("Location", "/");
+        server.send(333);
+    });
+
+    // Gestione CHIUDI dal Web
+    server.on("/chiudi", []() {
+        LOG_INFO("Web: Richiesta chiusura");
+        startValvola(false);
+
+        server.sendHeader("Location", "/");
+        server.send(333);
+    });
+
+    server.onNotFound([]() {
+        String uri = server.uri();
+        // Silenziamo le richieste di Alexa/Hue per non sporcare il log
+        if (uri.indexOf("api") == -1) {
+            LOG_WARN("404: %s", uri.c_str());
+        }
+        server.send(404, "text/plain", "Not Found");
+    });
+
+    server.on("/favicon.ico", []() { server.send(204); });
+
     server.begin();
 
     LOG_INFO("Setup completato correttamente.");
@@ -77,27 +119,41 @@ void loop() {
 
     // 1. GESTIONE PULSANTI FISICI
     // Agiscono solo se la valvola non si sta già muovendo
-    if (!isMoving) {
+    if (!EV_isMoving) {
         if (digitalRead(BTN_APRI) == LOW) {
-            LOG_NOTIFY("Pulsante fisico: APRI premuto");
+            LOG_NOTIFY("Pulsante fisico: APRI");
             delay(50); // Debounce
-            startValvola(true, 30); // Apre per 30 min di default
-            if (lastAdminChatId != 0) bot.sendTo(lastAdminChatId, "🔘 Pulsante fisico: Apertura avviata.");
+            startValvola(true, 30);
+
+            // if (lastAdminChatId == 0) {
+                // lastAdminChatId = lnEsp32Orto_chatid;
+            bot.sendTo(lastAdminChatId, "🔘 Pulsante fisico: Apertura avviata.");
+            // } else {
+                // LOG_WARN("Impossibile notificare Telegram: lastAdminChatId è zero!");
+            // }
+            delay(500); // Evita letture multiple
         }
 
         if (digitalRead(BTN_CHIU) == LOW) {
-            LOG_NOTIFY("Pulsante fisico: CHIUDI premuto");
+            LOG_NOTIFY("Pulsante fisico: CHIUDI");
             delay(50); // Debounce
             startValvola(false);
-            if (lastAdminChatId != 0) bot.sendTo(lastAdminChatId, "🔘 Pulsante fisico: Chiusura avviata.");
+
+            if (lastAdminChatId != 0) {
+                bot.sendTo(lastAdminChatId, "🔘 Pulsante fisico: Chiusura avviata.");
+            }
+            delay(500);
         }
     }
+
+
+
 
     // 2. GESTIONE TELEGRAM
     manageTelegram();
 
     // 3. AUTO-CHIUSURA
-    if (isOpen && !isMoving && (millis() - lastOpenMillis > currentAutoCloseDuration)) {
+    if (EV_isOpen && !EV_isMoving && (millis() - lastOpenMillis > currentAutoCloseDuration)) {
         LOG_NOTIFY("Timer scaduto. Chiusura automatica.");
         startValvola(false);
         if (lastAdminChatId != 0) bot.sendTo(lastAdminChatId, "🕒 Tempo scaduto: valvola chiusa.");
@@ -107,61 +163,6 @@ void loop() {
 
 
 
-
-// void loop_() {
-//     server.handleClient();
-//     checkValvolaTimer();
-//     updateTempHistory();
-
-//     static unsigned long lastCheck = 0;
-//     if (millis() - lastCheck > 30000) { // Controllo sensore ogni 30s
-//         lastCheck = millis();
-//         checkSensorHealth();
-//     }
-
-//     TBMessage msg;
-//     if (bot.getNewMessage(msg)) {
-//         lastAdminChatId = msg.chatId;
-//         String text = msg.text;
-
-//         if (text == "/reboot") {
-//             LOG_WARN("Reboot richiesto da Telegram!");
-//             bot.sendMessage(msg, "🔄 Riavvio in corso...");
-//             delay(2000);
-//             ESP.restart();
-//         }
-
-//         if (isMoving) {
-//             bot.sendMessage(msg, "⚠️ Operazione in corso... Attendi la fine del movimento.");
-//             LOG_DEBUG("Comando ignorato: valvola in movimento.");
-//         }
-//         else {
-//             if (text.startsWith("/apri")) {
-//                 int min = 30;
-//                 if (text.indexOf(' ') != -1) min = text.substring(text.indexOf(' ') + 1).toInt();
-//                 startValvola(true, min);
-//                 bot.sendMessage(msg, "✅ Apertura avviata (" + String(min) + " min)");
-//             }
-//             else if (text == "/chiudi") {
-//                 startValvola(false);
-//                 bot.sendMessage(msg, "✅ Chiusura avviata.");
-//             }
-//             else if (text == "/status") {
-//                 sensors.requestTemperatures();
-//                 String s = "Stato: " + String(isOpen ? "APERTA" : "CHIUSA") + "\n";
-//                 s += "Temp: " + String(sensors.getTempCByIndex(0)) + " °C";
-//                 bot.sendMessage(msg, s);
-//             }
-//         }
-//     }
-
-//     // Auto-chiusura
-//     if (isOpen && !isMoving && (millis() - lastOpenMillis > currentAutoCloseDuration)) {
-//         LOG_NOTIFY("Timer scaduto. Chiusura automatica.");
-//         startValvola(false);
-//         if (lastAdminChatId != 0) bot.sendTo(lastAdminChatId, "🕒 Tempo scaduto: valvola chiusa.");
-//     }
-// }
 
 void updateTempHistory() {
     if (millis() - lastTempUpdate > 3600000 || lastTempUpdate == 0) {
@@ -192,3 +193,5 @@ void checkSensorHealth() {
         }
     }
 }
+
+

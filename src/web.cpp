@@ -34,7 +34,7 @@ void handleRoot() {
     for(int i=0; i<24; i++) html += String(tempHistory[i]) + (i==23?"":",");
     html += "],borderColor:'teal',fill:true}]}});</script>";
 
-    if (isMoving) {
+    if (EV_isMoving) {
         html += "<p style='color:orange;'>⚠️ MOVIMENTO IN CORSO...</p>";
     } else {
         html += "<div><a href='/apri?t=30'><button class='btn'>APRI (30m)</button></a>";

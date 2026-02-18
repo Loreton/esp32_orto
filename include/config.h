@@ -31,12 +31,12 @@
 #define BTN_CHIU  19
 #define SENSOR_PIN 4
 
-#define MOVING_TIME 15000
+#define MOVING_TIME 15000 // 15 secondi
 
 #ifdef __I_AM_MAIN_CPP__
 
-    bool isMoving = false;
-    bool isOpen = false;
+    bool EV_isMoving = false;
+    bool EV_isOpen = false;
     bool sensorFault = false;
     bool alarmSent = false;
     unsigned long moveStartTime = 0;
@@ -54,7 +54,7 @@
     OneWire oneWire(SENSOR_PIN);
     DallasTemperature sensors(&oneWire);
 #else
-    extern bool isMoving, isOpen, sensorFault, alarmSent;
+    extern bool EV_isMoving, EV_isOpen, sensorFault, alarmSent;
     extern unsigned long moveStartTime, lastOpenMillis, currentAutoCloseDuration;
     extern int64_t lastAdminChatId;
     extern float tempHistory[24];
