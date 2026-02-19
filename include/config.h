@@ -18,18 +18,15 @@
 #define LOG_MODULE_LEVEL LOG_LEVEL_DEBUG
 #include "lnLogger_Class.h"
 
-// Pin Config
-// #define RELAY_PWR 18
-// #define RELAY_DIR 19
-// #define SENSOR_PIN 21
 
 // --- PIN CONFIG ---
 #define RELAY_PWR 16
 #define RELAY_DIR 17
+#define BTN_APRI  19
+#define BTN_CHIU  18
 #define BUZZER    23
-#define BTN_APRI  21
-#define BTN_CHIU  19
 #define SENSOR_PIN 4
+#define STATUS_LED 25
 
 #define MOVING_TIME 15000 // 15 secondi
 
@@ -70,3 +67,4 @@ void handleRoot(void);
 void updateTempHistory(void);
 void checkSensorHealth(void);
 void manageTelegram(void);
+void handleStatusLED(void);

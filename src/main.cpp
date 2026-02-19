@@ -24,15 +24,11 @@ const char* password = casettaPassword;
 
 
 
-
-// const char* ssid = "TUO_WIFI";
-// const char* password = "TUA_PASSWORD";
-
 void setup() {
 
     Serial.begin(115200);
     delay(1000);
-    lnLog.init();
+    lnLog.init(22);
     LOG_INFO("Sistema OrtoControl in avvio...");
 
     if (lastAdminChatId == 0) {
@@ -50,8 +46,21 @@ void setup() {
 
 
     WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED) { delay(500); }
-    LOG_INFO("WiFi Connesso. IP: %s", WiFi.localIP().toString().c_str());
+    int8_t timeout=5;
+    while (WiFi.status() != WL_CONNECTED && timeout>0) {
+        --timeout;
+        delay(1000);
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+        LOG_INFO("WiFi Connesso. IP: %s", WiFi.localIP().toString().c_str());
+    } else {
+        LOG_ERROR("ERRORE Connessione WiFi...");
+    }
+
+
+    // WiFi.begin(ssid, password);
+    // while (WiFi.status() != WL_CONNECTED) { delay(500); }
 
     tgClient.setInsecure();
     bot.setUpdateTime(2000);
@@ -67,6 +76,9 @@ void setup() {
         server.send(404, "text/plain", "Non trovato");
     });
 
+
+
+
     // Gestione APRI dal Web
     server.on("/apri", []() {
         int minuti = 30;
@@ -77,7 +89,7 @@ void setup() {
 
         // Redirect alla home per non vedere "Not Found"
         server.sendHeader("Location", "/");
-        server.send(333);
+        server.send(303);
     });
 
     // Gestione CHIUDI dal Web
@@ -86,7 +98,7 @@ void setup() {
         startValvola(false);
 
         server.sendHeader("Location", "/");
-        server.send(333);
+        server.send(303);
     });
 
     server.onNotFound([]() {
@@ -110,6 +122,7 @@ void loop() {
     espalexa.loop();
     checkValvolaTimer();
     updateTempHistory();
+    handleStatusLED();
 
     static unsigned long lastCheck = 0;
     if (millis() - lastCheck > 30000) { // Controllo sensore ogni 30s
@@ -195,3 +208,19 @@ void checkSensorHealth() {
 }
 
 
+void handleStatusLED() {
+    static unsigned long lastBlink = 0;
+    static bool ledState = false;
+
+    if (EV_isMoving) {
+        // Lampeggio rapido durante il movimento
+        if (millis() - lastBlink > 200) {
+            lastBlink = millis();
+            ledState = !ledState;
+            digitalWrite(STATUS_LED, ledState);
+        }
+    } else {
+        // Stato fisso quando ferma
+        digitalWrite(STATUS_LED, EV_isOpen ? HIGH : LOW);
+    }
+}

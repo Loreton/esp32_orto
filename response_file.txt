@@ -1,130 +1,24 @@
-Certamente. Passare da `String` a `snprintf()` è un'ottima pratica su microcontrollori (ESP32/ESP8266) perché evita la frammentazione della memoria heap.
+Certamente! Sarei felice di aiutarti a revisionare e ottimizzare il tuo codice.
 
-Ecco il codice convertito. Ho utilizzato un buffer di caratteri (`char buffer[...]`) locale per comporre i messaggi.
+Tuttavia, **non ho accesso diretto ai file sul tuo computer**. Per poterti aiutare, dovresti **incollare qui il contenuto dei file** che ritieni critici o descrivermi i problemi che stai riscontrando.
 
-```cpp
-// // updated by ...: Loreto Notarantonio 
-// Date .........: 16-02-2026 16.32.37 
-// // >>> telegram.cpp 
+Per procedere in modo efficiente, potresti indicarmi:
 
-#include "config.h"
+1.  **Il Linguaggio/Framework:** (es. Python, JavaScript/React, C++, Java, ecc.)
+2.  **L'obiettivo del codice:** Cosa dovrebbe fare questa parte del progetto?
+3.  **I sintomi del problema:**
+    *   Ricevi messaggi di errore specifici? (Incollali qui).
+    *   Il codice è troppo lento?
+    *   La logica non produce il risultato sperato?
+    *   Vuoi semplicemente una revisione per renderlo più "pulito" (refactoring)?
 
-void manageTelegram() {
-    TBMessage msg;
-    if (bot.getNewMessage(msg)) {
-        // Buffer generico per comporre i messaggi (abbastanza grande per i testi previsti)
-        char buf[256];
+---
 
-        // 1. Visualizza sempre il ChatID nel LOG
-        LOG_INFO("Messaggio ricevuto da ChatID: %lld", (long long)msg.chatId);
+### Come possiamo procedere?
 
-        // 2. Controllo se il ChatID è diverso dall'ultimo salvato
-        if (msg.chatId != lastAdminChatId) {
-            LOG_NOTIFY("Nuovo utente rilevato! Precedente: %lld, Attuale: %lld", (long long)lastAdminChatId, (long long)msg.chatId);
+Se hai molti file, iniziamo dai più importanti. Ad esempio, potresti postare:
+*   Il file principale (es. `main.py`, `index.js`, `app.py`).
+*   La funzione o la classe che pensi stia causando problemi.
+*   Il file di configurazione (se il problema riguarda le dipendenze).
 
-            // Notifica l'utente del suo ID tramite snprintf
-            snprintf(buf, sizeof(buf), 
-                     "Ciao! Il tuo ChatID è: %lld\nOra sono sincronizzato con te per le notifiche automatiche.", 
-                     (long long)msg.chatId);
-            
-            bot.sendMessage(msg, buf);
-
-            // Aggiorna la variabile globale
-            lastAdminChatId = msg.chatId;
-        }
-
-        String text = msg.text; // Il comando in entrata rimane String per comodità di confronto
-
-        // Gestione Reboot
-        if (text == "/reboot") {
-            LOG_WARN("Reboot richiesto da Telegram!");
-            bot.sendMessage(msg, "🔄 Riavvio in corso...");
-            delay(2000);
-            ESP.restart();
-        }
-
-        // Controllo stato movimento
-        if (EV_isMoving) {
-            bot.sendMessage(msg, "⚠️ Operazione in corso... Attendi la fine del movimento.");
-            LOG_DEBUG("Comando ignorato: valvola in movimento.");
-        } else {
-            if (text.startsWith("/apri")) {
-                int min = 30;
-                if (text.indexOf(' ') != -1) {
-                    min = text.substring(text.indexOf(' ') + 1).toInt();
-                }
-                startValvola(true, min);
-                
-                snprintf(buf, sizeof(buf), "✅ Apertura avviata (%d min)", min);
-                bot.sendMessage(msg, buf);
-
-            } else if (text == "/chiudi") {
-                startValvola(false);
-                bot.sendMessage(msg, "✅ Chiusura avviata.");
-
-            } else if (text == "/status") {
-                sensors.requestTemperatures();
-                float temp = sensors.getTempCByIndex(0);
-                
-                // Composizione messaggio di stato con snprintf
-                // %s per stringhe, %.1f per float con 1 decimale, %lld per long long
-                snprintf(buf, sizeof(buf), 
-                         "Stato: %s\nTemp: %.1f °C\nIl tuo ID: %lld", 
-                         EV_isOpen ? "APERTA" : "CHIUSA", 
-                         temp, 
-                         (long long)msg.chatId);
-                
-                bot.sendMessage(msg, buf);
-            }
-        }
-    }
-}
-
-// Versione semplificata (manageTelegram_) con snprintf
-void manageTelegram_() {
-    TBMessage msg;
-    if (bot.getNewMessage(msg)) {
-        char buf[128];
-        lastAdminChatId = msg.chatId;
-        String text = msg.text;
-
-        if (text == "/reboot") {
-            LOG_WARN("Reboot richiesto da Telegram!");
-            bot.sendMessage(msg, "🔄 Riavvio in corso...");
-            delay(2000);
-            ESP.restart();
-        }
-
-        if (EV_isMoving) {
-            bot.sendMessage(msg, "⚠️ Operazione in corso... Attendi la fine del movimento.");
-        } else {
-            if (text.startsWith("/apri")) {
-                int min = 30;
-                if (text.indexOf(' ') != -1) min = text.substring(text.indexOf(' ') + 1).toInt();
-                startValvola(true, min);
-                snprintf(buf, sizeof(buf), "✅ Apertura avviata (%d min)", min);
-                bot.sendMessage(msg, buf);
-
-            } else if (text == "/chiudi") {
-                startValvola(false);
-                bot.sendMessage(msg, "✅ Chiusura avviata.");
-
-            } else if (text == "/status") {
-                sensors.requestTemperatures();
-                snprintf(buf, sizeof(buf), "Stato: %s\nTemp: %.1f °C", 
-                         EV_isOpen ? "APERTA" : "CHIUSA", 
-                         sensors.getTempCByIndex(0));
-                bot.sendMessage(msg, buf);
-            }
-        }
-    }
-}
-```
-
-### Note sulle modifiche effettuate:
-
-1.  **Buffer di caratteri:** Ho aggiunto `char buf[256]`. La dimensione 256 è prudenziale; se i messaggi sono molto lunghi puoi aumentarla, ma per questi testi è sufficiente.
-2.  **Cast `(long long)`:** Il tipo `chatId` in TelegramBot è solitamente un intero a 64 bit. Per assicurarsi che `%lld` funzioni correttamente su tutte le architetture (ESP8266/ESP32), è meglio forzare il cast a `long long`.
-3.  **Gestione Float:** `snprintf` su ESP32/ESP8266 supporta nativamente il formato `%f`. Ho usato `%.1f` per visualizzare un solo decimale per la temperatura (es. 22.5 °C).
-4.  **Operatore Ternario:** Per lo stato della valvola ho usato `EV_isOpen ? "APERTA" : "CHIUSA"`, che passa direttamente la stringa corretta al segnaposto `%s`.
-5.  **Sicurezza:** `snprintf` garantisce che non si scriva mai oltre la dimensione del buffer specificata (`sizeof(buf)`), prevenendo crash di memoria (buffer overflow).
+**Incolla pure il primo blocco di codice qui sotto e dimmi cosa vorresti migliorare!**

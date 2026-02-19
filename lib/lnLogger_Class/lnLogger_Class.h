@@ -1,6 +1,6 @@
 /*
 // updated by ...: Loreto Notarantonio
-// Date .........: 16-02-2026 08.36.41
+// Date .........: 19-02-2026 15.59.49
 */
 
 
@@ -29,7 +29,7 @@
 class ESP32Logger { // Renamed from ESP32LoggerMutex for simplicity and clarity
     public:
         ESP32Logger(void);
-        void init(void);
+        void init(const uint8_t filename_buffer_len=20);
         void write(const char* color, const char* tag, const char* file, const char* function, int line, const char* format, ...);
         const char* msecToHMS(char *buffer, uint8_t buffer_len, uint32_t millisec, bool addMilliSec=false, bool stripHeader=false);
         const char* msecToHMS(uint32_t millisec, bool withMilliSec=false, bool stripHours=false); // usa un buffer interno
@@ -39,6 +39,8 @@ class ESP32Logger { // Renamed from ESP32LoggerMutex for simplicity and clarity
         ESP32Time rtc;
         struct tm      m_timeinfo;
         char sharedTimeBUFFER[16];
+        bool fIncludeFunction=false; // log -> filename.function:linno
+        uint8_t m_FILENAME_BUFFER_LENGTH; // spazio dedicato a -> [filename.function:linno]
 
         bool m_mutexInitialized = false;
         SemaphoreHandle_t m_logMutex = NULL; // The mutex to protect log operations
