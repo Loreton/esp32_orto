@@ -26,7 +26,7 @@
 #define BTN_CHIU  18
 #define BUZZER    23
 #define SENSOR_PIN 4
-#define STATUS_LED 25
+#define STATUS_LED 25 // ON: EV_opened, OFF: EV_closed, BLINKING: EV_isMoving
 
 #define MOVING_TIME 15000 // 15 secondi
 
@@ -35,7 +35,8 @@
     bool EV_isMoving = false;
     bool EV_isOpen = false;
     bool sensorFault = false;
-    bool alarmSent = false;
+    // bool alarmSent = false;
+    float currentTemperature = 0.0; // <--- AGGIUNTA
     unsigned long moveStartTime = 0;
     unsigned long lastOpenMillis = 0;
     unsigned long currentAutoCloseDuration = 1800000;
@@ -51,7 +52,9 @@
     OneWire oneWire(SENSOR_PIN);
     DallasTemperature sensors(&oneWire);
 #else
-    extern bool EV_isMoving, EV_isOpen, sensorFault, alarmSent;
+    // extern bool EV_isMoving, EV_isOpen, sensorFault, alarmSent;
+    extern bool EV_isMoving, EV_isOpen, sensorFault;
+    extern float currentTemperature;
     extern unsigned long moveStartTime, lastOpenMillis, currentAutoCloseDuration;
     extern int64_t lastAdminChatId;
     extern float tempHistory[24];
@@ -60,7 +63,7 @@
     extern DallasTemperature sensors;
 #endif
 
-// Prototipi
+// Prototypes
 void startValvola(bool apri, int minuti = 30);
 void checkValvolaTimer(void);
 void handleRoot(void);

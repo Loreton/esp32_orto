@@ -30,6 +30,8 @@ void startValvola(bool apri, int minuti) {
         EV_isOpen = false;
     }
 
+    // Questa sequenza è **ottima**: il ritardo di 150ms assicura che il relè della direzione
+    // sia già commutato prima di dare potenza, evitando archi elettrici o inversioni brusche.
     digitalWrite(RELAY_DIR, apri ? HIGH : LOW);
     delay(150);
     digitalWrite(RELAY_PWR, HIGH);

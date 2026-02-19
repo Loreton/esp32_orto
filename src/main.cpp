@@ -35,6 +35,7 @@ void setup() {
         lastAdminChatId = BOTchatid;
     }
     // Configurazione Pin
+    pinMode(STATUS_LED, OUTPUT);
     pinMode(RELAY_PWR, OUTPUT);
     pinMode(RELAY_DIR, OUTPUT);
     pinMode(BUZZER, OUTPUT);
@@ -66,31 +67,34 @@ void setup() {
     bot.setUpdateTime(2000);
     bot.setTelegramToken(BOTtoken);
 
+    // --- SENSORE VELOCE ---
     sensors.begin();
+    sensors.setWaitForConversion(false); // <--- NON aspetta la lettura
+    sensors.requestTemperatures();       // Prima richiesta
+
+    // --- ROTTE WEB ---
+    server.on("/", handleRoot);
 
     // WebServer: Gestione rotte
-    server.on("/", handleRoot);
-    server.on("/favicon.ico", []() { server.send(204); });
-    server.onNotFound([]() {
-        LOG_WARN("Richiesta 404: %s", server.uri().c_str());
-        server.send(404, "text/plain", "Non trovato");
-    });
-
+    // server.on("/", handleRoot);
+    // server.on("/favicon.ico", []() { server.send(204); });
+    // server.onNotFound([]() {
+    //     LOG_WARN("Richiesta 404: %s", server.uri().c_str());
+    //     server.send(404, "text/plain", "Non trovato");
+    // });
 
 
 
     // Gestione APRI dal Web
     server.on("/apri", []() {
-        int minuti = 30;
-        if (server.hasArg("t")) minuti = server.arg("t").toInt();
-
+        int8_t minuti = server.hasArg("t") ? server.arg("t").toInt() : 30;
         LOG_INFO("Web: Richiesta apertura per %d min", minuti);
         startValvola(true, minuti);
-
-        // Redirect alla home per non vedere "Not Found"
         server.sendHeader("Location", "/");
-        server.send(303);
+        server.send(303); // Torna alla home istantaneamente
     });
+
+
 
     // Gestione CHIUDI dal Web
     server.on("/chiudi", []() {
@@ -119,7 +123,7 @@ void setup() {
 
 void loop() {
     server.handleClient();
-    espalexa.loop();
+    // espalexa.loop();
     checkValvolaTimer();
     updateTempHistory();
     handleStatusLED();
